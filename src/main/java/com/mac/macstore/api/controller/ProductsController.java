@@ -1,28 +1,27 @@
 package com.mac.macstore.api.controller;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mac.macstore.bll.abstractions.services.IDeviceService;
-import com.mac.macstore.bll.models.DeviceEntity;
+import com.mac.macstore.bll.abstractions.services.IProductService;
+import com.mac.macstore.bll.models.ProductEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.internalServerError;
 
 @RestController
-@RequestMapping("/devices")
-public class DeviceController {
-    private IDeviceService deviceService;
+@RequestMapping("/products")
+public class ProductsController {
+    private IProductService productService;
 
-    public DeviceController(IDeviceService deviceService) {
-        this.deviceService = deviceService;
+    public ProductsController(IProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity getDevices()
+    public ResponseEntity getProducts()
     {
         try {
-            var resStr = new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(deviceService.getAll());
+            var resStr = new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(productService.getAll());
             return ResponseEntity.ok(resStr);
         }
         catch (Exception e)
@@ -32,10 +31,10 @@ public class DeviceController {
     }
 
     @PostMapping
-    public ResponseEntity postBook(@RequestBody DeviceEntity entity)
+    public ResponseEntity postProduct(@RequestBody ProductEntity entity)
     {
         try {
-            deviceService.create(entity);
+            productService.create(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e)
@@ -45,10 +44,10 @@ public class DeviceController {
     }
 
     @PutMapping
-    public ResponseEntity putBook(@RequestBody DeviceEntity entity)
+    public ResponseEntity putProduct(@RequestBody ProductEntity entity)
     {
         try {
-            deviceService.update(entity);
+            productService.update(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e)
@@ -58,10 +57,10 @@ public class DeviceController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteBook(@RequestParam int id)
+    public ResponseEntity deleteProduct(@RequestParam int id)
     {
         try {
-            deviceService.delete(id);
+            productService.delete(id);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e)

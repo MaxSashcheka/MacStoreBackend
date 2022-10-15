@@ -1,4 +1,4 @@
-package com.mac.macstore.dal.Connectors;
+package com.mac.macstore.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ public class DBConnection {
     static {
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/javawork",
+                    "jdbc:mysql://localhost:3306/mydb",
                     "root",
                     "rootroot"
             );
