@@ -28,7 +28,7 @@ public class UsersController {
         }
         catch (Exception e)
         {
-            return internalServerError().body("Some problem with server!");
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class UsersController {
         }
         catch (Exception e)
         {
-            return internalServerError().body("Some problem with server!");
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 }

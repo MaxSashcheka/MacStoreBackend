@@ -2,42 +2,44 @@ package com.mac.macstore.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mac.macstore.bll.abstractions.services.IProductTypeService;
+import com.mac.macstore.bll.abstractions.services.IUserTypeService;
 import com.mac.macstore.bll.models.ProductTypeEntity;
+import com.mac.macstore.bll.models.UserTypeEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.internalServerError;
 
 @RestController
-@RequestMapping("/products/types")
-public class ProductTypeController {
-    private IProductTypeService productTypeService;
+@RequestMapping("/users/types")
+public class UserTypeController {
+    private IUserTypeService userTypeService;
 
-    public ProductTypeController(IProductTypeService productTypeService) {
-        this.productTypeService = productTypeService;
+    public UserTypeController(IUserTypeService userTypeService) {
+        this.userTypeService = userTypeService;
     }
 
     @GetMapping
-    public ResponseEntity getProductTypes() {
+    public ResponseEntity getUserTypes() {
         try {
             var resStr = new ObjectMapper()
                     .writer()
                     .withDefaultPrettyPrinter()
                     .writeValueAsString(
-                            productTypeService.getAll()
+                            userTypeService.getAll()
                     );
             return ResponseEntity.ok(resStr);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity postProductType(@RequestBody ProductTypeEntity entity) {
+    public ResponseEntity postUserType(@RequestBody UserTypeEntity entity)
+    {
         try {
-            productTypeService.create(entity);
+            userTypeService.create(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {
@@ -46,9 +48,9 @@ public class ProductTypeController {
     }
 
     @PutMapping
-    public ResponseEntity putProductType(@RequestBody ProductTypeEntity entity) {
+    public ResponseEntity putUserType(@RequestBody UserTypeEntity entity) {
         try {
-            productTypeService.update(entity);
+            userTypeService.update(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {
@@ -57,9 +59,9 @@ public class ProductTypeController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteProductType(@RequestParam int id) {
+    public ResponseEntity deleteUserType(@RequestParam int id) {
         try {
-            productTypeService.delete(id);
+            userTypeService.delete(id);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {

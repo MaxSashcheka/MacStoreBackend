@@ -1,43 +1,44 @@
 package com.mac.macstore.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mac.macstore.bll.abstractions.services.IProductTypeService;
-import com.mac.macstore.bll.models.ProductTypeEntity;
+import com.mac.macstore.bll.abstractions.services.IBasketService;
+import com.mac.macstore.bll.abstractions.services.IProductService;
+import com.mac.macstore.bll.models.BasketEntity;
+import com.mac.macstore.bll.models.ProductEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.internalServerError;
 
 @RestController
-@RequestMapping("/products/types")
-public class ProductTypeController {
-    private IProductTypeService productTypeService;
+@RequestMapping("/baskets")
+public class BasketController {
+    private IBasketService basketService;
 
-    public ProductTypeController(IProductTypeService productTypeService) {
-        this.productTypeService = productTypeService;
+    public BasketController(IBasketService basketService) {
+        this.basketService = basketService;
     }
 
     @GetMapping
-    public ResponseEntity getProductTypes() {
+    public ResponseEntity getBasket(@RequestParam int id) {
         try {
             var resStr = new ObjectMapper()
                     .writer()
                     .withDefaultPrettyPrinter()
                     .writeValueAsString(
-                            productTypeService.getAll()
+                            basketService.getAll(id)
                     );
             return ResponseEntity.ok(resStr);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity postProductType(@RequestBody ProductTypeEntity entity) {
+    public ResponseEntity postBasket(@RequestBody BasketEntity entity) {
         try {
-            productTypeService.create(entity);
+            basketService.create(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {
@@ -46,9 +47,9 @@ public class ProductTypeController {
     }
 
     @PutMapping
-    public ResponseEntity putProductType(@RequestBody ProductTypeEntity entity) {
+    public ResponseEntity putBasket(@RequestBody BasketEntity entity) {
         try {
-            productTypeService.update(entity);
+            basketService.update(entity);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {
@@ -57,9 +58,9 @@ public class ProductTypeController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteProductType(@RequestParam int id) {
+    public ResponseEntity deleteBasket(@RequestParam int id) {
         try {
-            productTypeService.delete(id);
+            basketService.delete(id);
             return ResponseEntity.ok().body("OK!");
         }
         catch (Exception e) {

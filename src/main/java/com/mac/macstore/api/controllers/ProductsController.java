@@ -18,8 +18,7 @@ public class ProductsController {
     }
 
     @GetMapping
-    public ResponseEntity getProducts()
-    {
+    public ResponseEntity getProducts() {
         try {
             var resStr = new ObjectMapper()
                     .writer()
@@ -29,48 +28,41 @@ public class ProductsController {
                     );
             return ResponseEntity.ok(resStr);
         }
-        catch (Exception e)
-        {
-            return internalServerError().body("Some problem with server!");
+        catch (Exception e) {
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity postProduct(@RequestBody ProductEntity entity)
-    {
+    public ResponseEntity postProduct(@RequestBody ProductEntity entity) {
         try {
             productService.create(entity);
             return ResponseEntity.ok().body("OK!");
         }
-        catch (Exception e)
-        {
-            return internalServerError().body("Some problem with server!");
+        catch (Exception e) {
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
     @PutMapping
-    public ResponseEntity putProduct(@RequestBody ProductEntity entity)
-    {
+    public ResponseEntity putProduct(@RequestBody ProductEntity entity) {
         try {
             productService.update(entity);
             return ResponseEntity.ok().body("OK!");
         }
-        catch (Exception e)
-        {
-            return internalServerError().body("Some problem with server!");
+        catch (Exception e) {
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 
     @DeleteMapping
-    public ResponseEntity deleteProduct(@RequestParam int id)
-    {
+    public ResponseEntity deleteProduct(@RequestParam int id) {
         try {
             productService.delete(id);
             return ResponseEntity.ok().body("OK!");
         }
-        catch (Exception e)
-        {
-            return internalServerError().body("Some problem with server!");
+        catch (Exception e) {
+            return internalServerError().body("Some problem with server - " + e.getMessage());
         }
     }
 }
