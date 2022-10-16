@@ -16,6 +16,8 @@ public class DBConnection {
             );
             statement = connection.createStatement();
         } catch (SQLException e) {
+            System.out.println("dfqwfwq");
+            System.out.println(e.getSQLState());
             throw new RuntimeException(e);
         }
     }
